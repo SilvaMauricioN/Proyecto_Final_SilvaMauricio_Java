@@ -20,6 +20,7 @@ public class PrincipalMakerController {
 
     @GetMapping
     public List<PrincipalMaker> fecthPrincipalMaker() {
+        
         return principalMakerService.fecthPrincipalMaker();
     }
 
