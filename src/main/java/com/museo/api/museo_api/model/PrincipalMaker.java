@@ -1,5 +1,4 @@
 package com.museo.api.museo_api.model;
-import java.time.LocalDate;
 import jakarta.persistence.*;
 
 @Entity
