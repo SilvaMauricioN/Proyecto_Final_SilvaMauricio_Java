@@ -1,5 +1,7 @@
 package com.museo.api.museo_api.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.util.List;
 
 @Entity
 @Table(name = "principalmakers")
@@ -7,16 +9,29 @@ public class PrincipalMaker {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long idPrincipalMaker;
+  
+  @NotBlank(message = "El nombre es obligatorio")
   private String name;
-  @Column(name = "placeofbirth")
+  
+  @NotBlank(message = "El lugar de nacimiento es obligatorio")
+  @Column(name = "placeofbirth")  
   private String placeOfBirth;
+
+  @NotBlank(message = "La fecha de nacimiento es obligatoria")
   @Column(name = "dateofbirth")
   private String dateOfBirth;
-  @Column(name = "dateofdeath")
+
+  @PastOrPresent(message = "La fecha de defunción no puede ser en el futuro")  @Column(name = "dateofdeath")
   private String dateOfDeath;
+
   @Column(name = "placeofdeath")
   private String placeOfDeath;
+
+  @NotBlank(message = "La nacionalidad es obligatoria")
   private String nationality;
+
+  @OneToMany(mappedBy = "principalMaker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<ArtObject> artObjects;
 
   public PrincipalMaker (){}; 
 
