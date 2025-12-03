@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PrincipalMakerRepository extends JpaRepository<PrincipalMaker,Long> {
+public interface PrincipalMakerRepository extends JpaRepository<PrincipalMaker,Integer> {
   Optional<PrincipalMaker> findByName(String name);
   boolean existsByName(String name);
   boolean existsByNameAndIdPrincipalMakerNot(String name, Integer id);

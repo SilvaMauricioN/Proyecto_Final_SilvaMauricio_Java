@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ArtObjectResponseDTO  {
-  private Long  idArtObject;
+  private Integer  idArtObject;
   private String objectNumber;
   private String title;
   private String longTitle;

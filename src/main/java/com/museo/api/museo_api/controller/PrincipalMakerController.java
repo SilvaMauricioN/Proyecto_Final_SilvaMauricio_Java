@@ -1,56 +1,54 @@
 package com.museo.api.museo_api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.museo.api.museo_api.service.PrincipalMakerService;
-import com.museo.api.museo_api.model.PrincipalMaker;
+import com.museo.api.museo_api.dto.request.PrincipalMakerRequestDTO;
+import com.museo.api.museo_api.dto.response.PrincipalMakerResponseDTO;
 import java.util.List;
 
-@CrossOrigin(origins = "*") 
-@RestController 
-@RequestMapping("/api/principalmaker") 
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/api/principalmaker")
 public class PrincipalMakerController {
-      private final PrincipalMakerService principalMakerService;
+  private final PrincipalMakerService principalMakerService;
 
-    @Autowired
-    public PrincipalMakerController(PrincipalMakerService principalMakerService) {
-        this.principalMakerService = principalMakerService;
-    }
+  @Autowired
+  public PrincipalMakerController(PrincipalMakerService principalMakerService) {
+    this.principalMakerService = principalMakerService;
+  }
 
-    @GetMapping
-    public List<PrincipalMaker> fecthPrincipalMaker() {
-        
-        return principalMakerService.fecthPrincipalMaker();
-    }
+  @GetMapping
+  public ResponseEntity<List<PrincipalMakerResponseDTO>> getAll() {
+    List<PrincipalMakerResponseDTO> listMakers = principalMakerService.findAll();
+    return ResponseEntity.ok(listMakers);
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PrincipalMaker> getPrincipalMakerById(@PathVariable long id) {
-        return principalMakerService.getPrincipalMakerById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<PrincipalMakerResponseDTO> getById(@PathVariable Integer id) {
+    PrincipalMakerResponseDTO maker = principalMakerService.findById(id);
+    return ResponseEntity.ok(maker);
+  }
 
-    @PostMapping
-    public PrincipalMaker savePrincipalMaker(@RequestBody PrincipalMaker principalMaker) {
-        return principalMakerService.savePrincipalMaker(principalMaker);
-    }
+  @PostMapping
+  public ResponseEntity<PrincipalMakerResponseDTO> create(@RequestBody PrincipalMakerRequestDTO principalMakerDto) {
+    PrincipalMakerResponseDTO created = principalMakerService.create(principalMakerDto);
+    return new ResponseEntity<>(created, HttpStatus.CREATED);
+  }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PrincipalMaker> updatePrincipalMaker(@PathVariable Long id, @RequestBody PrincipalMaker principalMaker) {
-        if (principalMakerService.getPrincipalMakerById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(principalMakerService.updatePrincipalMaker(id, principalMaker));
-    }
+  @PutMapping("/{id}")
+  public ResponseEntity<PrincipalMakerResponseDTO> update(@PathVariable Integer id,
+      @RequestBody PrincipalMakerRequestDTO principalMakerDto) {
+    PrincipalMakerResponseDTO updated = principalMakerService.update(id, principalMakerDto);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (principalMakerService.getPrincipalMakerById(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        principalMakerService.deletePrincipalMaker(id);
-        return ResponseEntity.noContent().build();
-    }
-  
+    return ResponseEntity.ok(updated);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    principalMakerService.delete(id);
+    return ResponseEntity.noContent().build();
+  }
 }

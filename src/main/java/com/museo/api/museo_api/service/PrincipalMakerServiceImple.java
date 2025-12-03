@@ -1,40 +1,86 @@
 package com.museo.api.museo_api.service;
 
 import java.util.List;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
+import com.museo.api.museo_api.dto.request.PrincipalMakerRequestDTO;
+import com.museo.api.museo_api.dto.response.PrincipalMakerResponseDTO;
+import com.museo.api.museo_api.exception.ResourceExistsException;
+import com.museo.api.museo_api.exception.ResourceNotFoundException;
+import com.museo.api.museo_api.mapper.PrincipalMakerMapper;
 import com.museo.api.museo_api.model.PrincipalMaker;
 import com.museo.api.museo_api.repository.PrincipalMakerRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class PrincipalMakerServiceImple implements PrincipalMakerService {
   private final PrincipalMakerRepository principalMakerRepository;
+  private final PrincipalMakerMapper mapper;
 
-  @Autowired
-  public PrincipalMakerServiceImple(PrincipalMakerRepository principalMakerRepository){
-    this.principalMakerRepository = principalMakerRepository;
+  @Override
+  public PrincipalMakerResponseDTO create(PrincipalMakerRequestDTO dto) {
+    // Validar que no exista un maker con el mismo nombre
+    if (principalMakerRepository.existsByName(dto.getName())) {
+      throw new ResourceExistsException("PrincipalMaker", "name", dto.getName());
+    }
+
+    PrincipalMaker maker = mapper.toEntity(dto);
+    PrincipalMaker saved = principalMakerRepository.save(maker);
+    return mapper.toResponseDTO(saved);
   }
 
-  public List<PrincipalMaker> fecthPrincipalMaker() {
-    return principalMakerRepository.findAll();
+  @Override
+  @Transactional(readOnly = true)
+  public PrincipalMakerResponseDTO findById(Integer id) {
+    PrincipalMaker maker = principalMakerRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("PrincipalMaker", "id", id));
+    return mapper.toResponseDTO(maker);
   }
 
-  public Optional<PrincipalMaker> getPrincipalMakerById(long idPrincipalMaker) {
-    return principalMakerRepository.findById(idPrincipalMaker);
+  @Override
+  @Transactional(readOnly = true)
+  public PrincipalMakerResponseDTO findByName(String name) {
+    PrincipalMaker maker = principalMakerRepository.findByName(name)
+        .orElseThrow(() -> new ResourceNotFoundException("PrincipalMaker", "name", name));
+    return mapper.toResponseDTO(maker);
   }
 
-  public PrincipalMaker savePrincipalMaker(PrincipalMaker principalMaker) {
-    return principalMakerRepository.save(principalMaker);
+  @Override
+  @Transactional(readOnly = true)
+  public List<PrincipalMakerResponseDTO> findAll() {
+    return principalMakerRepository.findAll().stream()
+        .map(mapper::toResponseDTO)
+        .collect(Collectors.toList());
   }
 
-  public PrincipalMaker updatePrincipalMaker(long idPrincipalMaker, PrincipalMaker principalMaker) {
-    principalMaker.setIdPrincipalMaker(idPrincipalMaker);
-    return principalMakerRepository.save(principalMaker);
+  @Override
+  public PrincipalMakerResponseDTO update(Integer id, PrincipalMakerRequestDTO dto) {
+    // Validar que el maker existe
+    PrincipalMaker maker = principalMakerRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("PrincipalMaker", "id", id));
+
+    // Validar que el nuevo nombre no exista en otro registro
+    if (principalMakerRepository.existsByNameAndIdPrincipalMakerNot(dto.getName(), id)) {
+      throw new ResourceExistsException("PrincipalMaker", "name", dto.getName());
+    }
+
+    mapper.updateEntityFromDTO(dto, maker);
+    PrincipalMaker updated = principalMakerRepository.save(maker);
+    return mapper.toResponseDTO(updated);
   }
 
-  public void deletePrincipalMaker(long idPrincipalMaker) {
-    principalMakerRepository.deleteById(idPrincipalMaker);
-  }  
+  @Override
+  public void delete(Integer id) {
+    // Validar que el maker existe antes de eliminar
+    if (!principalMakerRepository.existsById(id)) {
+      throw new ResourceNotFoundException("PrincipalMaker", "id", id);
+    }
+    principalMakerRepository.deleteById(id);
+  }
 }

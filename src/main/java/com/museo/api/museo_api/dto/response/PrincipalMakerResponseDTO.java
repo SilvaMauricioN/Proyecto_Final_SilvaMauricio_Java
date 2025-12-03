@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PrincipalMakerResponseDTO {
-  private long idPrincipalMaker;
+  private Integer idPrincipalMaker;
   private String name;
   private String placeOfBirth;
   private String dateOfBirth;

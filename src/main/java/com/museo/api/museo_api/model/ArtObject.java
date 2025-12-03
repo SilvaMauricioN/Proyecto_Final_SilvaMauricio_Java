@@ -16,7 +16,7 @@ public class ArtObject {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "idartobject")
-  private Long idArtObject;
+  private Integer idArtObject;
 
   @Column(name = "objectnumber", nullable = false, unique = true)
   private String objectNumber;
@@ -62,8 +62,8 @@ public class ArtObject {
   private List<WebImage> webImages;
   
   // --- Getters y Setters y Constructores (Omitidos por brevedad) ---
-  public Long getId() { return idArtObject; }
-  public void setId(Long id) { this.idArtObject = id; }
+  public Integer getId() { return idArtObject; }
+  public void setId(Integer id) { this.idArtObject = id; }
   public String getTitle() { return title; }
   public void setTitle(String title) { this.title = title; }
   public String getLongTitle() { return longTitle; }

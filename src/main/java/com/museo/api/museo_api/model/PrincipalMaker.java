@@ -1,4 +1,5 @@
 package com.museo.api.museo_api.model;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.util.List;
@@ -8,20 +9,21 @@ import java.util.List;
 public class PrincipalMaker {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long idPrincipalMaker;
-  
+  private Integer idPrincipalMaker;
+
   @NotBlank(message = "El nombre es obligatorio")
   private String name;
-  
+
   @NotBlank(message = "El lugar de nacimiento es obligatorio")
-  @Column(name = "placeofbirth")  
+  @Column(name = "placeofbirth")
   private String placeOfBirth;
 
   @NotBlank(message = "La fecha de nacimiento es obligatoria")
   @Column(name = "dateofbirth")
   private String dateOfBirth;
 
-  @PastOrPresent(message = "La fecha de defunción no puede ser en el futuro")  @Column(name = "dateofdeath")
+  @PastOrPresent(message = "La fecha de defunción no puede ser en el futuro")
+  @Column(name = "dateofdeath")
   private String dateOfDeath;
 
   @Column(name = "placeofdeath")
@@ -33,9 +35,10 @@ public class PrincipalMaker {
   @OneToMany(mappedBy = "principalMaker", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<ArtObject> artObjects;
 
-  public PrincipalMaker (){}; 
+  public PrincipalMaker() {
+  };
 
-  public PrincipalMaker(long idPrincipalMaker, String name, String placeOfBirth, String dateOfBirth,
+  public PrincipalMaker(Integer idPrincipalMaker, String name, String placeOfBirth, String dateOfBirth,
       String dateOfDeath, String placeOfDeath, String nationality) {
     this.idPrincipalMaker = idPrincipalMaker;
     this.name = name;
@@ -46,11 +49,11 @@ public class PrincipalMaker {
     this.nationality = nationality;
   }
 
-  public long getIdPrincipalMaker() {
+  public Integer getIdPrincipalMaker() {
     return idPrincipalMaker;
   }
 
-  public void setIdPrincipalMaker(long idPrincipalMaker) {
+  public void setIdPrincipalMaker(Integer idPrincipalMaker) {
     this.idPrincipalMaker = idPrincipalMaker;
   }
 
@@ -101,18 +104,17 @@ public class PrincipalMaker {
   public void setNationality(String nationality) {
     this.nationality = nationality;
   }
-  
-  
+
   @Override
   public String toString() {
-      return "PrincipalMaker{" +
-              "IdPrincipalMaker=" + idPrincipalMaker +
-              ", name='" + name + '\'' +
-              ", placeOfBirth='" + placeOfBirth + '\'' +
-              ", dateOfBirth=" + dateOfBirth +
-              ", dateOfDeath=" + dateOfDeath +
-              ", placeOfDeath='" + placeOfDeath + '\'' +
-              ", nationality='" + nationality + '\'' +              
-              '}';
-  }  
+    return "PrincipalMaker{" +
+        "IdPrincipalMaker=" + idPrincipalMaker +
+        ", name='" + name + '\'' +
+        ", placeOfBirth='" + placeOfBirth + '\'' +
+        ", dateOfBirth=" + dateOfBirth +
+        ", dateOfDeath=" + dateOfDeath +
+        ", placeOfDeath='" + placeOfDeath + '\'' +
+        ", nationality='" + nationality + '\'' +
+        '}';
+  }
 }
