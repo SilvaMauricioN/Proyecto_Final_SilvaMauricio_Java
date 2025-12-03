@@ -1,12 +1,12 @@
 package com.museo.api.museo_api.mapper;
 
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import com.museo.api.museo_api.dto.request.ArtObjectRequestDTO;
 import com.museo.api.museo_api.dto.response.ArtObjectResponseDTO;
 import com.museo.api.museo_api.model.ArtObject;
-import com.museo.api.museo_api.model.WebImage;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class ArtObjectMapper {
   public ArtObject toEntity(ArtObjectRequestDTO dto) {
@@ -32,12 +32,19 @@ public class ArtObjectMapper {
     dto.setObjectNumber(artObject.getObjectNumber());
     dto.setTitle(artObject.getTitle());
     dto.setLongTitle(artObject.getLongTitle());
-    
+
     if (artObject.getPrincipalMaker() != null) {
-      dto.setIdPrincipalMaker(artObject.getPrincipalMaker().getIdPrincipalMaker());
-      dto.setPrincipalMakerName(artObject.getPrincipalMaker().getName());
+      try {
+        dto.setIdPrincipalMaker(artObject.getPrincipalMaker().getIdPrincipalMaker());
+        dto.setPrincipalMakerName(artObject.getPrincipalMaker().getName());
+      } catch (Exception e) {
+        log.warn("Error al cargar PrincipalMaker para ArtObject {}: {}",
+            artObject.getIdArtObject(), e.getMessage());
+        dto.setIdPrincipalMaker(null);
+        dto.setPrincipalMakerName("Unknown Artist");
+      }
     }
-    
+
     dto.setHasImage(artObject.getHasImage());
     dto.setProductionPlaces(artObject.getProductionPlaces());
     dto.setDescription(artObject.getDescription());
@@ -47,12 +54,18 @@ public class ArtObjectMapper {
     dto.setPhysicalMedium(artObject.getPhysicalMedium());
     dto.setScLabelLine(artObject.getScLabelLine());
     dto.setHistoricalDescription(artObject.getHistoricalDescription());
-    
-    if (artObject.getWebImages() != null) {
-      dto.setImageUrls(artObject.getWebImages().stream()
-      .map(WebImage::getUrl)
-      .collect(Collectors.toList()));
-    }    
+
+    try {
+      if (artObject.getWebImage() != null) {
+        dto.setImageUrl(artObject.getWebImage().getUrl());
+      } else {
+        dto.setImageUrl(null);
+      }
+    } catch (Exception e) {
+      log.warn("Error al cargar WebImage para ArtObject {}: {}",
+          artObject.getIdArtObject(), e.getMessage());
+      dto.setImageUrl(null);
+    }
     return dto;
   }
 
@@ -69,6 +82,6 @@ public class ArtObjectMapper {
     artObject.setPhysicalMedium(dto.getPhysicalMedium());
     artObject.setScLabelLine(dto.getScLabelLine());
     artObject.setHistoricalDescription(dto.getHistoricalDescription());
-  }    
-  
+  }
+
 }

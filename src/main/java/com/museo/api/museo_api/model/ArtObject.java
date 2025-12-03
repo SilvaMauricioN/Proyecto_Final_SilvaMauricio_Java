@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
-
 
 @Entity
 @Table(name = "artobjects")
@@ -58,26 +56,79 @@ public class ArtObject {
   @Column(name = "historicaldescription", columnDefinition = "TEXT")
   private String historicalDescription;
 
-  @OneToMany(mappedBy = "artObject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<WebImage> webImages;
-  
+  @OneToOne(mappedBy = "artObject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private WebImage webImage;
+
   // --- Getters y Setters y Constructores (Omitidos por brevedad) ---
-  public Integer getId() { return idArtObject; }
-  public void setId(Integer id) { this.idArtObject = id; }
-  public String getTitle() { return title; }
-  public void setTitle(String title) { this.title = title; }
-  public String getLongTitle() { return longTitle; }
-  public void setLongTitle(String longTitle) { this.longTitle = longTitle; }
-  public boolean isHasImage() { return hasImage; }
-  public void setHasImage(boolean hasImage) { this.hasImage = hasImage; }
-  public String getDescription() { return description; }
-  public void setDescription(String description) { this.description = description; }
-  public String getHistoricalDescription() { return historicalDescription; }
-  public void setHistoricalDescription(String historicalDescription) { this.historicalDescription = historicalDescription; }
-  public String [] getMaterials() { return materials; }
-  public void setMaterials(String [] materials) { this.materials = materials; }
-  public String getPhysicalMedium() { return physicalMedium; }
-  public void setPhysicalMedium(String physicalMedium) { this.physicalMedium = physicalMedium; }
-  public PrincipalMaker getPrincipalMaker() { return principalMaker; }
-  public void setPrincipalMaker(PrincipalMaker principalMaker) { this.principalMaker = principalMaker; }
+  public Integer getId() {
+    return idArtObject;
+  }
+
+  public void setId(Integer id) {
+    this.idArtObject = id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getLongTitle() {
+    return longTitle;
+  }
+
+  public void setLongTitle(String longTitle) {
+    this.longTitle = longTitle;
+  }
+
+  public boolean isHasImage() {
+    return hasImage;
+  }
+
+  public void setHasImage(boolean hasImage) {
+    this.hasImage = hasImage;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getHistoricalDescription() {
+    return historicalDescription;
+  }
+
+  public void setHistoricalDescription(String historicalDescription) {
+    this.historicalDescription = historicalDescription;
+  }
+
+  public String[] getMaterials() {
+    return materials;
+  }
+
+  public void setMaterials(String[] materials) {
+    this.materials = materials;
+  }
+
+  public String getPhysicalMedium() {
+    return physicalMedium;
+  }
+
+  public void setPhysicalMedium(String physicalMedium) {
+    this.physicalMedium = physicalMedium;
+  }
+
+  public PrincipalMaker getPrincipalMaker() {
+    return principalMaker;
+  }
+
+  public void setPrincipalMaker(PrincipalMaker principalMaker) {
+    this.principalMaker = principalMaker;
+  }
 }
