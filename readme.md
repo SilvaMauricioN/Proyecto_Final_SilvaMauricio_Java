@@ -1,8 +1,8 @@
-# Artistas CRUD API
-
-Este es un proyecto de ejemplo que implementa una API RESTful básica utilizando Spring Boot para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre la entidad Artistas.
+# Museo Arte API
+API REST para la gestión de obras de arte y artistas de un museo.
 
 # Tecnologías Utilizadas
+Desarrollada con Spring Boot 3, Java 17 y PostgreSQL.
 
 Spring Boot: Framework principal para crear aplicaciones de grado de producción.
 
@@ -25,3 +25,12 @@ Maven: Gestor de dependencias.
 |  **GET**   | `/api/principalmakers/{id}` | **Leer** (obtener) un `PrincipalMaker` por su ID.       | Ninguno.                                          |
 |  **PUT**   | `/api/principalmakers/{id}` | **Actualizar** un `PrincipalMaker` existente por su ID. | **Requerido** (Objeto JSON con los nuevos datos). |
 | **DELETE** | `/api/principalmakers/{id}` | **Eliminar** un `PrincipalMaker` por su ID.             | Ninguno.                                          |
+# Configuración
+
+Base de datos
+Edita application.properties:
+''' 
+spring.datasource.url=jdbc:postgresql://localhost:5432/artmuseum
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+'''

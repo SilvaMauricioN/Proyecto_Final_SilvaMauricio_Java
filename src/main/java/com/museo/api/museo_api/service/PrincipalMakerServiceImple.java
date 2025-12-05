@@ -16,6 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Servicio para gestionar artistas.
+ * Implementa validaciones de negocio: verifica duplicados, existencia de
+ * recursos.
+ * Maneja transacciones y coordina entre repositorios y mappers.
+ */
 @Service
 @RequiredArgsConstructor
 @Transactional

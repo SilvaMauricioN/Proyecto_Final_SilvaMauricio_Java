@@ -6,6 +6,11 @@ import com.museo.api.museo_api.dto.response.ArtObjectResponseDTO;
 import com.museo.api.museo_api.model.ArtObject;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Mapper para convertir entre ArtObject y sus DTOs.
+ * Además de mapear campos básicos, extrae las URLs de las imágenes asociadas
+ * y obtiene el nombre del artista para incluirlos en la respuesta.
+ */
 @Slf4j
 @Component
 public class ArtObjectMapper {

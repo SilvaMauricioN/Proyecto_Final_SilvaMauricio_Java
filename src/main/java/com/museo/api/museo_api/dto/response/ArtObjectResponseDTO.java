@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO para enviar datos de un objeto de arte al cliente.
+ * Incluye el nombre del artista y la URL de imágenes asociada.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

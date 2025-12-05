@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manejador global de excepciones.
+ * Intercepta todas las excepciones de la aplicación y las convierte
+ * en respuestas HTTP apropiadas con mensajes de error claros.
+ */
 @ControllerAdvice
 public class RestExceptionHandler {
 
@@ -17,14 +22,14 @@ public class RestExceptionHandler {
     ex.getBindingResult().getFieldErrors().forEach(error -> {
       errors.put(error.getField(), error.getDefaultMessage());
     });
-    
+
     Map<String, String> response = new HashMap<>();
     response.put("error", "Error de validación de la solicitud");
     response.putAll(errors);
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
-    
+
   // Captura Error 404
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<Map<String, String>> handleNotFoundException(ResourceNotFoundException ex) {
@@ -41,5 +46,5 @@ public class RestExceptionHandler {
     error.put("error", "Conflicto de recursos");
     error.put("message", ex.getMessage());
     return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-  }  
+  }
 }

@@ -9,6 +9,11 @@ import com.museo.api.museo_api.dto.request.PrincipalMakerRequestDTO;
 import com.museo.api.museo_api.dto.response.PrincipalMakerResponseDTO;
 import java.util.List;
 
+/**
+ * Controlador REST para artistas.
+ * Expone endpoints HTTP para operaciones CRUD sobre artistas.
+ * Maneja validaciones de entrada y retorna respuestas HTTP apropiadas.
+ */
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/principalmaker")

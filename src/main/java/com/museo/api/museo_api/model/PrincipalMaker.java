@@ -4,11 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.util.List;
 
+/**
+ * Entidad que representa un artista o creador principal en el museo.
+ * Se mapea a la tabla 'principalmakers' en PostgreSQL.
+ * Contiene información biográfica del artista y su relación con las obras
+ * creadas.
+ */
 @Entity
 @Table(name = "principalmakers")
 public class PrincipalMaker {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "idprincipalmaker")
   private Integer idPrincipalMaker;
 
   @NotBlank(message = "El nombre es obligatorio")
@@ -22,7 +29,6 @@ public class PrincipalMaker {
   @Column(name = "dateofbirth")
   private String dateOfBirth;
 
-  @PastOrPresent(message = "La fecha de defunción no puede ser en el futuro")
   @Column(name = "dateofdeath")
   private String dateOfDeath;
 

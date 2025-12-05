@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidad que representa un objeto de arte en la colección del museo.
+ * Se mapea a la tabla 'artobjects' en PostgreSQL.
+ * Contiene toda la información descriptiva de la obra y sus relaciones.
+ */
 @Entity
 @Table(name = "artobjects")
 @Data

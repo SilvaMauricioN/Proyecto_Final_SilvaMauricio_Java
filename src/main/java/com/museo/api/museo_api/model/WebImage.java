@@ -3,6 +3,11 @@ package com.museo.api.museo_api.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+/**
+ * Entidad que representa una imagen web asociada a un objeto de arte.
+ * Se mapea a la tabla 'webimages' en PostgreSQL.
+ * Almacena las URLs y dimensiones de las imágenes de las obras.
+ */
 @Entity
 @Table(name = "webimages")
 public class WebImage {
