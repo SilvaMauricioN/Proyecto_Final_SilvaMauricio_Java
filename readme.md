@@ -29,8 +29,10 @@ Maven: Gestor de dependencias.
 
 Base de datos
 Edita application.properties:
-''' 
+
+```
 spring.datasource.url=jdbc:postgresql://localhost:5432/artmuseum
 spring.datasource.username=tu_usuario
 spring.datasource.password=tu_contraseña
-'''
+
+```
