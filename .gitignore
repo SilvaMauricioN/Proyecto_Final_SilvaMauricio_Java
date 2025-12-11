@@ -34,3 +34,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Excluir el archivo de secretos locales
+src/main/resources/application-local.properties
